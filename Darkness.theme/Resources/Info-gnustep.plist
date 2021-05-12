@@ -1,0 +1,16 @@
+{
+    GSThemeAuthors = (
+	"Gregory Casamento"
+    );
+    GSThemeDetails = Darkness;
+    GSThemeDomain = {
+	GSBackHandlesWindowDecorations = YES;
+	NSMenuInterfaceStyle = NSNextStepInterfaceStyle;
+    };
+    GSThemeIcon = "Darkness.png";
+    GSThemeLicense = GPL;
+    GSThemePreview = "Darkness.jpg";
+    GSThemeTiles = {
+    };
+    GSThemeVersion = "1.0";
+}

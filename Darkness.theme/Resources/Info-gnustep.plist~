@@ -1,0 +1,16 @@
+{
+    GSThemeAuthors = (
+	"Riccardo Mottola & Gregory Casamento"
+    );
+    GSThemeDetails = "Think dark. A dark theme.";
+    GSThemeDomain = {
+	GSBackHandlesWindowDecorations = YES;
+	NSMenuInterfaceStyle = NSNextStepInterfaceStyle;
+    };
+    GSThemeIcon = "Thematic.png";
+    GSThemeLicense = "";
+    GSThemePreview = "Darkeness.jpg";
+    GSThemeTiles = {
+    };
+    GSThemeVersion = "1.0";
+}
