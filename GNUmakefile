@@ -26,6 +26,6 @@ include $(GNUSTEP_MAKEFILES)/common.make
 # 
 RESOURCE_SET_NAME = Themes
 Themes_INSTALL_DIR = $(GNUSTEP_LIBRARY)/Themes
-Themes_RESOURCE_FILES = Darkness.themes
+Themes_RESOURCE_FILES = Darkness.theme
 
 include $(GNUSTEP_MAKEFILES)/resource-set.make
