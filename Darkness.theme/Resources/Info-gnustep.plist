@@ -13,4 +13,5 @@
     GSThemeTiles = {
     };
     GSThemeVersion = "1.0";
+    GSThemeDarkMode = YES;
 }
