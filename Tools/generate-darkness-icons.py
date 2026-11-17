@@ -54,6 +54,33 @@ CUBE = """<g stroke="#202027" stroke-width="1.5" stroke-linejoin="round">
 <path d="M36 33L39 31V34L36 36Z" fill="#d2d2e4"/>
 """
 
+# GWorkspace loads these from FSNode's bundle, so they need bundle-specific
+# theme overrides rather than the common_ prefix used by AppKit icons.
+DRIVE = """<g stroke="#202027" stroke-width="1.5" stroke-linejoin="round">
+  <path d="M4 25L29 10L44 19L19 34Z" fill="url(#back)"/>
+  <path d="M4 25L19 34V43L4 34Z" fill="url(#front)"/>
+  <path d="M19 34L44 19V28L19 43Z" fill="#30303b"/>
+</g>
+<path d="M6 25L29 12L41 19M20 35L42 22" fill="none" stroke="#b4b4c2"/>
+<path d="M7 30L12 33" fill="none" stroke="#d2d2e4" stroke-width="2"/>
+<path d="M23 36L39 27M23 39L39 30" fill="none" stroke="#777787"/>
+"""
+
+DRIVE_LID = """<path d="M12 24L28 15L36 20L20 29Z" fill="#62626e"
+  stroke="#454550" stroke-linejoin="round"/>
+<path d="M17 24L28 18L31 20L20 26Z" fill="#b4b4c2"/>
+"""
+
+DRIVE_OPEN = """<g transform="matrix(.866 -.5 .866 .5 24 22)">
+  <circle r="9" fill="#30303b" stroke="#202027" stroke-width="1.2"/>
+  <circle r="7" fill="#b4b4c2" stroke="#e3e3ec" stroke-width=".8"/>
+  <circle r="4.5" fill="none" stroke="#858591" stroke-width=".8"/>
+  <circle r="2" fill="#454550" stroke="#e3e3ec" stroke-width=".8"/>
+</g>
+<path d="M34 20L30 25L24 25" fill="none" stroke="#202027" stroke-width="3"/>
+<path d="M34 19L30 24L24 24" fill="none" stroke="#e3e3ec" stroke-width="1.5"/>
+"""
+
 
 def main():
     SOURCES.mkdir(parents=True, exist_ok=True)
@@ -63,18 +90,24 @@ def main():
             '<g fill="none" stroke="#e3e3ec" stroke-width="1.4" '
             'stroke-linecap="round" stroke-linejoin="round">' + badge + '</g>'
         )
+    icons = {f"common_{name}": artwork for name, artwork in icons.items()}
+    icons["org.gnustep.FSNode/HardDisk"] = DRIVE + DRIVE_LID
+    icons["org.gnustep.FSNode/HardDiskOpen"] = DRIVE + DRIVE_OPEN
     for name, artwork in icons.items():
-        source = SOURCES / f"common_{name}.svg"
+        source = SOURCES / f"{name}.svg"
+        source.parent.mkdir(parents=True, exist_ok=True)
         source.write_text(
             '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" '
             'viewBox="0 0 48 48">\n' + DEFS + '\n' + artwork + '</svg>\n'
         )
         # Keep the existing root filename; the other standard images use .tiff.
-        suffix = ".tif" if name == "Root_PC" else ".tiff"
+        suffix = ".tif" if name == "common_Root_PC" else ".tiff"
+        target = IMAGES / (name + suffix)
+        target.parent.mkdir(parents=True, exist_ok=True)
         png = cairosvg.svg2png(url=str(source), output_width=192, output_height=192)
         with Image.open(BytesIO(png)) as rendered:
             rendered.convert("RGBA").resize((48, 48), Image.Resampling.LANCZOS).save(
-                IMAGES / (source.stem + suffix), compression="tiff_lzw", dpi=(72, 72)
+                target, compression="tiff_lzw", dpi=(72, 72)
             )
 
 
